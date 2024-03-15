@@ -1,31 +1,28 @@
-import { FETCH_PLANETS_FAILURE, FETCH_PLANETS_REQUEST, FETCH_PLANETS_SUCCESS } from "./actiontype";
+import { SET_FILTERS, CLEAR_FILTERS } from '../Filter/actiontype';
 
 const initialState = {
-  isLoading:true,
-  isError:true,
-  planets: [],
+  filters: {
+    color: [],
+    shape: [],
+    size: [],
+  },
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_PLANETS_SUCCESS:
+    case SET_FILTERS:
       return {
         ...state,
-        isLoading:false,
-        isError:false,
-        planets: action.payload,
+        filters: action.payload,
       };
-      case FETCH_PLANETS_REQUEST:
+    case CLEAR_FILTERS:
       return {
         ...state,
-        isError:false,
-        isLoading:true,
-      };
-      case FETCH_PLANETS_FAILURE:
-      return {
-        ...state,
-        isLoading:false,
-        isError:true
+        filters: {
+          color: [],
+          shape: [],
+          size: [],
+        },
       };
     default:
       return state;

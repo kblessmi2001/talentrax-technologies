@@ -18,7 +18,7 @@ export const searchRequest = () => {
 export const searchItems = (searchText) => {
   return (dispatch) => {
     dispatch(searchRequest());
-    fetch(`http://localhost:8080/planets?q=${searchText}`)
+    fetch(`https://server-taletrax-tech.onrender.com/planets?q=${searchText}`)
       .then(response => response.json())
       .then(data => {
         dispatch(setSearchResults(data));
