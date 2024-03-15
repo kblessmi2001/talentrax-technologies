@@ -1,18 +1,12 @@
-// reducers/searchReducer.js
+import {  SET_SEARCH_RESULTS } from '../Search/actiontype';
 
 const initialState = {
-  searchText: '',
   searchResults: [] 
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_SEARCH_TEXT':
-      return {
-        ...state,
-        searchText: action.payload
-      };
-    case 'SET_SEARCH_RESULTS':
+    case SET_SEARCH_RESULTS:
       return {
         ...state,
         searchResults: action.payload
@@ -22,4 +16,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export  {reducer};
+export {reducer};

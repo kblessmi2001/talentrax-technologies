@@ -1,6 +1,4 @@
-// SearchPage.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons'; 
 import SideBar from './SideBar';
@@ -9,42 +7,73 @@ import { searchItems } from '../Redux/Search/action';
 
 const SearchPage = () => {
   const [searchText, setSearchText] = useState('');
-  const searchResults = useSelector(state => state.search.searchResults);
   const dispatch = useDispatch();
+  const searchResults = useSelector(state => state.SearchReducer.searchResults); 
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const searchTextFromParams = searchParams.get('q');
+    if (searchTextFromParams) {
+      setSearchText(searchTextFromParams);
+    }
+  }, []);
 
   const handleSearchChange = (e) => {
-    setSearchText(e.target.value);
+    const newSearchText = e.target.value;
+    setSearchText(newSearchText);
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('q', newSearchText);
+    window.history.pushState({}, '', url);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      dispatch(searchItems(searchText));
-    }
+  const handleSearchSubmit = () => {
+        dispatch(searchItems(searchText)); 
   };
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", flexwrap:"wrap" ,justifyContent: "center",marginTop:"30px" }}>
         <div>
           <input
-            style={{ width: "500px", height: "30px" }}
+            style={{ width: "300px", height: "30px" }}
             type="text"
             value={searchText}
             onChange={handleSearchChange}
-            onKeyPress={handleKeyPress}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearchSubmit(); 
+              }
+            }}
           />
         </div>
-        <div style={{ width: "40px", border: "1px solid black", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#4190f7", color: "white" }}>
+        <div
+          style={{
+            width: "40px",
+            border: "1px solid black",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#4190f7",
+            color: "white"
+          }}
+          onClick={handleSearchSubmit}
+        >
           <FontAwesomeIcon icon={faSearch} />
         </div>
       </div>
-      <div>
-        {searchResults.map(result => (
-          <div key={result.id}>{result.name}</div>
-        ))}
-      </div>
-      <div>
-        <SideBar />
+      <div style={{display:"flex",marginLeft:"100px",marginTop:"50px",width:"27%",margin:"auto"}}>
+        <div style={{width:"35%"}}>
+          <SideBar />
+        </div>
+        <div style={{ borderLeft: "1px solid black", marginLeft: "20px", paddingLeft: "20px",marginTop:"20px" }}>
+          </div>        <div>
+          {searchResults.map(result => (
+            <div key={result.id}>
+              <h3>{result.name}</h3>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
