@@ -1,5 +1,3 @@
-// action.js
-
 import { SEARCH_REQUEST, SET_SEARCH_RESULTS } from '../Search/actiontype';
 
 export const setSearchResults = (results) => {

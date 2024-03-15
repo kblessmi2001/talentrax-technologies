@@ -19,7 +19,7 @@ const SideBar = () => {
         queryString += `${key}=${filters[key].join(',')}&`;
       }
     }
-    return queryString.slice(0, -1); // Remove the trailing '&'
+    return queryString.slice(0, -1);
   };
 
   useEffect(() => {

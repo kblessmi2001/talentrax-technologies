@@ -1,5 +1,3 @@
-// action.js
-
 import axios from "axios";
 import { FETCH_PLANETS_SUCCESS, FETCH_PLANETS_REQUEST, FETCH_PLANETS_FAILURE, CLEAR_FILTERS, SET_FILTERS } from "../Filter/actiontype";
 
