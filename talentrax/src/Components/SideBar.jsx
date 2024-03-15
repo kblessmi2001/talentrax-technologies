@@ -1,37 +1,30 @@
 import React from 'react';
+import { Box, Flex, Checkbox, Text } from '@chakra-ui/react';
 
 const SideBar = () => {
     return (
-        <div> 
-            <h3>Color</h3>
-            <input type="checkbox" />
-            <label >Red</label>
-            <br />
-            <input type="checkbox" />
-            <label >Green</label>
-            <br />
-            <input type="checkbox" />
-            <label >Blue</label>
+        <Box>
+            <Text fontSize="xl" fontWeight="bold" mb="4">Color</Text>
+            <Flex direction="column">
+                <Checkbox mb="2">Red</Checkbox>
+                <Checkbox mb="2">Green</Checkbox>
+                <Checkbox mb="4">Blue</Checkbox>
+            </Flex>
 
-            <h3>Shape</h3>
-            <input type="checkbox" />
-            <label >Small</label>
-            <br />
-            <input type="checkbox" />
-            <label >Medium</label>
-            <br />
-            <input type="checkbox" />
-            <label >Large</label>
+            <Text fontSize="xl" fontWeight="bold" mb="4">Shape</Text>
+            <Flex direction="column">
+                <Checkbox mb="2">Small</Checkbox>
+                <Checkbox mb="2">Medium</Checkbox>
+                <Checkbox mb="4">Large</Checkbox>
+            </Flex>
 
-            <h3>Size</h3>
-            <input type="checkbox" />
-            <label >Round</label>
-            <br />
-            <input type="checkbox" />
-            <label >Oval</label>
-
-        </div>
+            <Text fontSize="xl" fontWeight="bold" mb="4">Size</Text>
+            <Flex direction="column">
+                <Checkbox mb="2">Round</Checkbox>
+                <Checkbox mb="4">Oval</Checkbox>
+            </Flex>
+        </Box>
     )
 }
 
-export default SideBar
+export default SideBar;

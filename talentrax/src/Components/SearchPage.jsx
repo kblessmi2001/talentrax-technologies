@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons'; 
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import SideBar from './SideBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchItems } from '../Redux/Search/action';
-
+import { Input, Flex, Box, Stack} from '@chakra-ui/react';
+import { Skeleton,Heading } from '@chakra-ui/react'
 const SearchPage = () => {
   const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
-  const searchResults = useSelector(state => state.SearchReducer.searchResults); 
+  const searchResults = useSelector(state => state.SearchReducer.searchResults);
+  const isLoading = useSelector(state => state.SearchReducer.isLoading);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -28,53 +30,66 @@ const SearchPage = () => {
   };
 
   const handleSearchSubmit = () => {
-        dispatch(searchItems(searchText)); 
+    dispatch(searchItems(searchText));
   };
 
   return (
     <div>
-      <div style={{ display: "flex", flexwrap:"wrap" ,justifyContent: "center",marginTop:"30px" }}>
-        <div>
-          <input
-            style={{ width: "300px", height: "30px" }}
-            type="text"
+      <Flex justifyContent="center" mt="30px">
+        <Box>
+          <Input
+            w="300px"
+            h="30px"
             value={searchText}
             onChange={handleSearchChange}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                handleSearchSubmit(); 
+                handleSearchSubmit();
               }
             }}
           />
-        </div>
-        <div
-          style={{
-            width: "40px",
-            border: "1px solid black",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#4190f7",
-            color: "white"
-          }}
+        </Box>
+        <Box
+          w="40px"
+          // border="1px solid black"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          bgColor="#4190f7"
+          color="white"
           onClick={handleSearchSubmit}
         >
           <FontAwesomeIcon icon={faSearch} />
-        </div>
-      </div>
-      <div style={{display:"flex",marginLeft:"100px",marginTop:"50px",width:"27%",margin:"auto"}}>
-        <div style={{width:"35%"}}>
+        </Box>
+      </Flex>
+      <Flex ml="100px" mt="50px" w="27%" mx="auto" >
+        <Box w="35%">
           <SideBar />
-        </div>
-        <div style={{ borderLeft: "1px solid black", marginLeft: "20px", paddingLeft: "20px",marginTop:"20px" }}>
-          </div>        <div>
-          {searchResults.map(result => (
-            <div key={result.id}>
-              <h3>{result.name}</h3>
-            </div>
-          ))}
-        </div>
-      </div>
+        </Box>
+        <Box borderLeft="1px solid black" ml="20px" pl="20px" minHeight="200px">
+          {isLoading ? (
+            
+           <Stack>
+             <Skeleton>
+  <div>contents wrapped</div>
+</Skeleton>
+ <Skeleton>
+ <div>contents wrapped</div>
+</Skeleton>
+ <Skeleton>
+ <div>contents wrapped</div>
+</Skeleton>
+           </Stack>
+          ) : (
+            searchResults.map(result => (
+              <div key={result.id}>
+            <Heading size="lg">{result.name}</Heading>
+              </div>
+            ))
+          )}
+        </Box>
+
+      </Flex>
     </div>
   );
 };
